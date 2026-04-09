@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Say Less. Mean Everything.</title>
+<meta name="description" content="From the Globe to the group chat: compress until it glows. Why the strongest lines outlive every venue that made them.">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://say-less.vercel.app/">
+<meta property="og:title" content="Say Less. Mean Everything.">
+<meta property="og:description" content="From the Globe to the group chat: compress until it glows. Why the strongest lines outlive every venue that made them.">
+
+<!-- Twitter card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Say Less. Mean Everything.">
+<meta name="twitter:description" content="From the Globe to the group chat: compress until it glows. Why the strongest lines outlive every venue that made them.">
+
+<!-- Favicon (inline SVG, gold S on black) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230a0a0a'/%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-size='44' font-weight='300' fill='%23d4a853' text-anchor='middle' font-style='italic'%3ES%3C/text%3E%3C/svg%3E">
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=JetBrains+Mono:wght@300;400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--bg2:#111;--fg:#e8e4de;--dim:#8a857d;--gold:#d4a853;--red:#c0392b;--green:#2c7a5a;--purple:#6a5acd;--blue:#5b8fb9;--serif:'Cormorant Garamond',Georgia,serif;--sans:'DM Sans',sans-serif;--mono:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden}
+
+/* ═══ HERO — scroll-reactive ═══ */
+.hero{height:200vh;position:relative}
+.hero-sticky{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden}
+.hero-sticky h1{font-family:var(--serif);font-weight:300;font-size:clamp(4rem,14vw,12rem);line-height:.9;transition:letter-spacing .1s,transform .1s;will-change:transform,letter-spacing}
+.hero-sticky h1 .line2{display:block;color:var(--gold);font-style:italic;opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
+.hero-sticky h1 .line2.show{opacity:1;transform:translateY(0)}
+.hero-sub{font-size:.95rem;color:var(--dim);max-width:34ch;margin-top:1.5rem;opacity:0;transition:opacity .8s .3s}
+.hero-sub.show{opacity:1}
+.hero-scroll-hint{position:absolute;bottom:15vh;font-family:var(--mono);font-size:.55rem;letter-spacing:.4em;text-transform:uppercase;color:var(--dim);opacity:0;animation:fadeIn 1s 1.5s forwards}
+
+/* ═══ SHATTER — multi-stage transformation ═══ */
+.shatter-section{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:2rem 2rem 1rem;position:relative;overflow:hidden}
+.shatter-container{position:relative;max-width:820px;width:100%}
+.shatter-word{display:inline-block;margin:0 .25em;font-size:clamp(1.3rem,2.8vw,1.8rem);color:var(--fg);transition:all 1.8s cubic-bezier(.25,.46,.45,.94);transform-origin:center center;position:relative;line-height:2.4;font-family:var(--serif);font-weight:400}
+.shatter-word.strikeout{text-decoration:line-through;text-decoration-color:var(--red);opacity:.35;transition:all .8s}
+.shatter-word.highlight{color:var(--gold);font-weight:600;transition:all .8s}
+.shatter-word.dead{opacity:0;transform:translate(var(--tx),var(--ty)) rotate(var(--rot)) scale(0);filter:blur(8px)}
+.shatter-result{font-family:var(--serif);font-size:clamp(2.5rem,6vw,5rem);font-weight:300;color:var(--gold);opacity:0;transform:scale(.5);transition:all .8s cubic-bezier(.34,1.56,.64,1)}
+.shatter-result.shown{opacity:1;transform:scale(1)}
+.sh-narration{font-family:var(--mono);font-size:clamp(1.1rem,2.5vw,1.45rem);letter-spacing:.01em;color:var(--fg);margin-top:3rem;min-height:5em;line-height:2;opacity:0;transition:opacity .6s;max-width:700px}
+.sh-narration.show{opacity:1}
+.sh-narration .step-label{color:var(--gold);font-weight:600}
+.sh-stats{font-family:var(--mono);font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);margin-top:1.5rem;opacity:0;transition:opacity 1s}
+.sh-stats.show{opacity:1}
+
+/* Play button — removed, replaced by typewriter pacing */
+.sh-prelude{font-family:var(--mono);font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;color:var(--dim);margin-bottom:1.5rem;opacity:0;animation:fadeIn 1s .5s forwards}
+
+/* ═══ CATHEDRAL QUOTE — full viewport ═══ */
+.cathedral{height:200vh;position:relative}
+.cathedral-sticky{position:sticky;top:0;height:100vh;display:flex;justify-content:center;align-items:center;padding:2rem;overflow:hidden}
+.cathedral-text{font-family:var(--serif);font-weight:300;font-style:italic;text-align:center;line-height:1.1;font-size:clamp(2rem,5vw,4rem);will-change:transform,opacity;max-width:95vw}
+.cathedral-attr{position:absolute;bottom:15vh;font-family:var(--mono);font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);opacity:0;transition:opacity .5s}
+.cathedral-attr.show{opacity:1}
+
+/* ═══ SECTIONS ═══ */
+section{padding:5rem 2rem;max-width:860px;margin:0 auto}
+.sl{font-family:var(--mono);font-size:.55rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
+h2{font-family:var(--serif);font-weight:300;font-size:clamp(1.7rem,3.2vw,2.6rem);line-height:1.15;margin-bottom:1rem}
+p{max-width:56ch;margin-bottom:.9rem;font-size:.95rem}
+.divider{width:100%;max-width:860px;margin:0 auto;height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,83,.2),transparent);opacity:0;transition:opacity .8s}
+.divider.visible{opacity:1}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ═══ FLIP STORY CARDS ═══ */
+.story-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;margin:2rem 0}
+.story-card{perspective:800px;min-height:320px;cursor:pointer}
+.story-inner{position:relative;width:100%;height:100%;min-height:320px;transition:transform .7s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.story-card.flipped .story-inner{transform:rotateY(180deg)}
+.story-front,.story-back{position:absolute;inset:0;backface-visibility:hidden;background:var(--bg2);padding:1.8rem;display:flex;flex-direction:column}
+.story-back{transform:rotateY(180deg);overflow-y:auto;-webkit-overflow-scrolling:touch}
+.sf-quote{font-family:var(--serif);font-size:1.3rem;font-weight:400;line-height:1.3;margin-bottom:.5rem;flex-grow:1;display:flex;align-items:center}
+.sf-attr{font-family:var(--mono);font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;color:var(--dim)}
+.sf-tag{display:inline-block;margin-top:.5rem;font-family:var(--mono);font-size:.42rem;letter-spacing:.2em;text-transform:uppercase;padding:.15rem .45rem;border:1px solid rgba(212,168,83,.2);color:var(--gold)}
+.sf-hint{font-family:var(--mono);font-size:.42rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(212,168,83,.3);margin-top:.5rem;text-align:right}
+.sb-text{font-size:.78rem;color:var(--fg);line-height:1.65;flex-grow:1}
+.sb-close{font-family:var(--mono);font-size:.42rem;color:var(--dim);text-align:right;margin-top:.5rem}
+
+/* ═══ LINEAGE RIVER ═══ */
+.river{overflow-x:auto;display:flex;gap:0;margin:2rem -2rem;padding:0 2rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(212,168,83,.15) transparent}
+.river::-webkit-scrollbar{height:3px}
+.river::-webkit-scrollbar-thumb{background:rgba(212,168,83,.15)}
+.rn{min-width:260px;max-width:260px;padding:1.8rem 1.4rem;border-right:1px solid rgba(255,255,255,.03);scroll-snap-align:start;flex-shrink:0}
+.rn-era{font-family:var(--mono);font-size:.45rem;letter-spacing:.25em;text-transform:uppercase;margin-bottom:.3rem}
+.rn-era.blues{color:var(--blue)}.rn-era.folk{color:#a0855b}.rn-era.punk{color:var(--red)}.rn-era.indie{color:var(--green)}.rn-era.rap{color:var(--purple)}.rn-era.pop{color:var(--gold)}.rn-era.news{color:#8ea4b8}
+.rn-name{font-family:var(--serif);font-size:1rem;font-weight:600;margin-bottom:.3rem}
+.rn-line{font-family:var(--serif);font-style:italic;font-size:.9rem;line-height:1.35;margin-bottom:.3rem}
+.rn-why{font-size:.7rem;color:var(--dim);line-height:1.5}
+
+/* ═══ TENSION ═══ */
+.tension-block{text-align:center;margin:2rem 0}
+.t-row{display:flex;justify-content:center;align-items:center;gap:1.2rem;margin-bottom:.2rem;flex-wrap:wrap}
+.t-w{font-family:var(--serif);font-size:clamp(1.1rem,2.2vw,1.8rem);font-weight:300}
+.t-w.l{color:var(--red)}.t-w.r{color:var(--green)}
+.t-s{width:36px;height:2px;background:var(--gold);position:relative}
+.t-s::after{content:'\26A1';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:.75rem;animation:spark 2s infinite}
+.t-res{font-family:var(--serif);font-style:italic;font-size:1.05rem;color:var(--gold)}
+
+/* ═══ EXAMPLE GRID ═══ */
+.eg-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:2rem 0}
+.eg{background:var(--bg2);padding:1.8rem}
+.eg h3{font-family:var(--sans);font-weight:500;font-size:.9rem;margin-bottom:.3rem}
+.eg p{font-size:.78rem;color:var(--dim);margin:0 0 .5rem}
+.eg .demo{padding:.6rem .9rem;background:rgba(255,255,255,.015);border-left:2px solid var(--gold);font-size:.82rem;line-height:1.6}
+.eg .demo em{color:var(--gold);font-style:normal}
+
+/* ═══ PILLS ═══ */
+.pills{display:flex;flex-wrap:wrap;gap:.35rem;margin:1rem 0}
+.pill{background:var(--bg2);padding:.5rem 1rem;font-family:var(--mono);font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(212,168,83,.25);transition:all .25s;cursor:pointer;user-select:none}
+.pill:hover,.pill.active{background:rgba(212,168,83,.12);border-color:var(--gold)}
+.pill:hover{background:var(--gold);color:var(--bg);transform:translateY(-2px)}
+
+/* ═══ VENUES ═══ */
+.venue-strip{display:flex;overflow-x:auto;gap:0;margin:1.5rem -2rem;padding:0 2rem;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:rgba(212,168,83,.15) transparent}
+.vc{min-width:220px;max-width:220px;padding:1.5rem;background:var(--bg2);border-right:1px solid rgba(255,255,255,.03);scroll-snap-align:start;flex-shrink:0;position:relative;overflow:hidden}
+.vc::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px}
+.vc:nth-child(1)::before{background:var(--gold)}.vc:nth-child(2)::before{background:var(--blue)}.vc:nth-child(3)::before{background:var(--red)}.vc:nth-child(4)::before{background:var(--purple)}.vc:nth-child(5)::before{background:var(--green)}
+.vc h3{font-family:var(--serif);font-size:.95rem;margin-bottom:.1rem}
+.vc .ve{font-family:var(--mono);font-size:.4rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:.3rem}
+.vc .vr{font-family:var(--serif);font-style:italic;font-size:.9rem;color:var(--gold);margin-bottom:.2rem}
+.vc p{font-size:.7rem;color:var(--dim);margin:0}
+
+/* ═══ POSTSCRIPT ═══ */
+.ps{background:var(--bg2);padding:1.8rem;margin-bottom:1.2rem;border-left:3px solid var(--purple)}
+.ps h3{font-family:var(--sans);font-weight:500;font-size:.9rem;margin-bottom:.2rem}
+.ps p{font-size:.78rem;color:var(--dim);margin:0}
+
+/* ═══ FOOTER ═══ */
+footer{text-align:center;padding:5rem 2rem}
+footer .cq{font-family:var(--serif);font-size:clamp(1.2rem,2.2vw,1.6rem);font-weight:300;font-style:italic;max-width:24ch;margin:0 auto 1rem;line-height:1.3;color:var(--gold)}
+footer .cn{font-size:.72rem;color:var(--dim)}
+
+/* ═══ SCROLL MORPH — the A+ moment ═══ */
+.morph{height:400vh;position:relative}
+.morph-sticky{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:2rem;overflow:hidden}
+.morph-stage{position:relative;width:100%;max-width:800px;height:40vh;display:flex;flex-wrap:wrap;align-content:center;justify-content:center}
+.morph-word{position:absolute;white-space:nowrap;transition:none;will-change:transform,opacity,font-size,color}
+.morph-label{position:absolute;bottom:12vh;font-family:var(--mono);font-size:.55rem;letter-spacing:.35em;text-transform:uppercase;color:var(--dim);opacity:0;transition:opacity .5s}
+.morph-label.show{opacity:1}
+
+/* ═══ ATTENTION VISUALIZER ═══ */
+.att-wrap{background:var(--bg2);padding:1.5rem;position:relative}
+.att-wrap canvas{width:100%;height:auto;display:block}
+.att-btn{background:none;border:1px solid rgba(255,255,255,.08);color:var(--dim);font-family:var(--mono);font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;padding:.35rem .8rem;cursor:pointer;transition:all .25s}
+.att-btn:hover{border-color:var(--gold);color:var(--gold)}
+.att-btn.active{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+.att-insight{font-family:var(--mono);font-size:.6rem;color:var(--dim);margin-top:1rem;min-height:2.5em;line-height:1.6;transition:opacity .4s}
+
+/* ═══ ANIMATIONS ═══ */
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes spark{0%,100%{opacity:.3;transform:translate(-50%,-50%) scale(.8)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.3)}}
+
+@media(max-width:700px){
+  .hero-sticky h1{font-size:clamp(3rem,10vw,5rem)}
+  .t-row{flex-direction:column;gap:.5rem}
+  .t-s{width:2px;height:20px}
+  .eg-grid{grid-template-columns:1fr}
+  section{padding:3rem 1.25rem}
+  .story-grid{grid-template-columns:1fr}
+  .story-card{min-height:220px}
+  .story-inner{min-height:220px}
+  .att-btn{font-size:.42rem;padding:.25rem .5rem}
+  .cathedral-text{font-size:clamp(1.5rem,4vw,3rem)}
+  .shatter-word{font-size:clamp(.9rem,4vw,1.15rem);margin:0 .12em;line-height:2}
+  .shatter-result{font-size:clamp(1.5rem,7vw,2.5rem)!important}
+  .sh-narration{font-size:clamp(.85rem,3.5vw,1.1rem);line-height:1.8}
+  .rn{min-width:240px;max-width:240px}
+  .vc{min-width:200px;max-width:200px}
+  .pills{gap:.25rem}
+  .pill{padding:.3rem .6rem;font-size:.42rem}
+}
+
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO — compresses as you scroll ═══ -->
+<div class="hero">
+  <div class="hero-sticky">
+    <h1 id="hero-h1">Say Less.<span class="line2" id="hero-line2">Mean Everything.</span></h1>
+    <p class="hero-sub" id="hero-sub">How a few plain words move minds.</p>
+    <div class="hero-scroll-hint">scroll &darr;</div>
+  </div>
+</div>
+
+<!-- ═══ THE TRANSFORMATION — watch compression happen ═══ -->
+<div class="shatter-section" id="shatter">
+  <div class="sh-prelude" id="sh-prelude">How six words changed a $9 billion company</div>
+  <div class="shatter-container" id="shatter-box"></div>
+  <div class="sh-narration" id="sh-narration"></div>
+  <div class="sh-stats" id="sh-stats">23 words &rarr; 6 &middot; Steve Jobs, 2001</div>
+</div>
+
+<!-- ═══ CATHEDRAL QUOTE ═══ -->
+<div class="cathedral" id="cathedral">
+  <div class="cathedral-sticky">
+    <div class="cathedral-text" id="cath-text">Not waving but drowning.</div>
+    <div class="cathedral-attr" id="cath-attr">Stevie Smith &middot; 1957 &middot; Four words. Whole life.</div>
+  </div>
+</div>
+
+<!-- ═══ THE SCROLL COMPRESSION — the A+ moment ═══ -->
+<div class="morph" id="morph">
+  <div class="morph-sticky" id="morph-sticky">
+    <div class="morph-stage" id="morph-stage"></div>
+    <div class="morph-label" id="morph-label"></div>
+  </div>
+</div>
+
+<!-- ═══ 01: STORIES ═══ -->
+<div class="divider"></div>
+<section>
+  <div class="reveal">
+    <p class="sl">01 &middot; Where great lines come from</p>
+    <h2>Tap a card for the backstory.</h2>
+  </div>
+  <div class="story-grid reveal" id="stories">
+    <div class="story-card" onclick="this.classList.toggle('flipped')"><div class="story-inner">
+      <div class="story-front"><div class="sf-quote">"1,000 songs in your pocket."</div><div class="sf-attr">Apple &middot; 2001</div><div class="sf-tag">Translation</div><div class="sf-hint">tap &rarr;</div></div>
+      <div class="story-back"><div class="sb-text">Jobs had the message before the product had a name. At the October 2001 launch, he pulled the iPod from his jeans: "This amazing little device holds a thousand songs, and it goes right in my pocket." The line behind him on the screen was already compressed to six words. The slide came first. The tagline came second. Two years later, when his ad agency pitched dancing silhouettes, Jobs resisted: "It doesn't show the product." James Vincent, a former DJ on the team, proposed adding the tagline. Jobs approved, then claimed the campaign was his idea.</div><div class="sb-close">tap back</div></div>
+    </div></div>
+    <div class="story-card" onclick="this.classList.toggle('flipped')"><div class="story-inner">
+      <div class="story-front"><div class="sf-quote">"Just do it."</div><div class="sf-attr">Nike &middot; 1988</div><div class="sf-tag">Imperative</div><div class="sf-hint">tap &rarr;</div></div>
+      <div class="story-back"><div class="sb-text">Dan Wieden stayed up the night before a pitch. He kept thinking about Gary Gilmore, a murderer facing a firing squad in 1977, whose last words were "Let's do it." Wieden changed one word. Nike's founder rejected it. "Just trust me." Sales: $877M &rarr; $9.2B.</div><div class="sb-close">tap back</div></div>
+    </div></div>
+    <div class="story-card" onclick="this.classList.toggle('flipped')"><div class="story-inner">
+      <div class="story-front"><div class="sf-quote">"To be, or not to be."</div><div class="sf-attr">Shakespeare &middot; ~1600</div><div class="sf-tag">Plain Abyss</div><div class="sf-hint">tap &rarr;</div></div>
+      <div class="story-back"><div class="sb-text">Actors got only their lines on a scrap of paper, never the full script. The Globe staged 12 plays every two weeks. Lines had to survive being learned from a scroll, delivered to 3,000 groundlings who'd throw food if bored. Writing for the illiterate ear and the ambassador's mind simultaneously.</div><div class="sb-close">tap back</div></div>
+    </div></div>
+    <div class="story-card" onclick="this.classList.toggle('flipped')"><div class="story-inner">
+      <div class="story-front"><div class="sf-quote">"I have a dream."</div><div class="sf-attr">King &middot; 1963</div><div class="sf-tag">Vision</div><div class="sf-hint">tap &rarr;</div></div>
+      <div class="story-back"><div class="sb-text">Partly improvised. Mahalia Jackson called out "Tell 'em about the dream, Martin!" King departed from his text. The most famous passage in 20th-century oratory was a live decision.</div><div class="sb-close">tap back</div></div>
+    </div></div>
+    <div class="story-card" onclick="this.classList.toggle('flipped')"><div class="story-inner">
+      <div class="story-front"><div class="sf-quote">"This is fine." &#128293;</div><div class="sf-attr">KC Green &middot; 2013</div><div class="sf-tag">Meme as Literature</div><div class="sf-hint">tap &rarr;</div></div>
+      <div class="story-back"><div class="sb-text">A cartoon dog in a burning room. Became the emotional register of an era. Beckett's "I can't go on. I'll go on" reborn as a meme, same compression, zero prestige, maximum portability. Shakespeare would have approved of the dog.</div><div class="sb-close">tap back</div></div>
+    </div></div>
+    <div class="story-card" onclick="this.classList.toggle('flipped')"><div class="story-inner">
+      <div class="story-front"><div class="sf-quote">"Parting is such sweet sorrow."</div><div class="sf-attr">Shakespeare &middot; ~1597</div><div class="sf-tag">Oxymoron</div><div class="sf-hint">tap &rarr;</div></div>
+      <div class="story-back"><div class="sb-text">Two words that shouldn't touch. He gave the oxymoron to a teenager on a balcony, where most people first feel that exact doubleness. The form matches the feeling.</div><div class="sb-close">tap back</div></div>
+    </div></div>
+    <div class="story-card" onclick="this.classList.toggle('flipped')"><div class="story-inner">
+      <div class="story-front"><div class="sf-quote">"I would prefer not to."</div><div class="sf-attr">Melville &middot; 1853</div><div class="sf-tag">Soft Force</div><div class="sf-hint">tap &rarr;</div></div>
+      <div class="story-back"><div class="sb-text">Repeated without variation or anger, becomes a crowbar. The gentleness is the violence. Passive resistance as literary device, a century before Gandhi made it political.</div><div class="sb-close">tap back</div></div>
+    </div></div>
+    <div class="story-card" onclick="this.classList.toggle('flipped')"><div class="story-inner">
+      <div class="story-front"><div class="sf-quote">"It's a cold and it's a broken Hallelujah."</div><div class="sf-attr">Leonard Cohen &middot; 1984</div><div class="sf-tag">Five Years</div><div class="sf-hint">tap &rarr;</div></div>
+      <div class="story-back"><div class="sb-text">Five years writing. 80 draft verses. Cohen sat on the floor of the Royalton Hotel in his underwear, banging his head on the carpet: "I can't finish this song." His label rejected the album. Dylan asked how long it took. "Two years," Cohen lied. Dylan said "I and I" took fifteen minutes. It took two decades and three other singers' versions for "Hallelujah" to become the most covered song alive.</div><div class="sb-close">tap back</div></div>
+    </div></div>
+    <div class="story-card" onclick="this.classList.toggle('flipped')"><div class="story-inner">
+      <div class="story-front"><div class="sf-quote">"Lemon."</div><div class="sf-attr">DDB / Volkswagen &middot; 1960</div><div class="sf-tag">Radical Honesty</div><div class="sf-hint">tap &rarr;</div></div>
+      <div class="story-back"><div class="sb-text">A Jewish-led agency selling a car designed under Hitler's oversight to postwar America. Helmut Krone and Julian Koenig put one word under a Beetle: "Lemon." Calling your own product defective was unthinkable. The copy revealed this car was rejected by inspectors for a tiny blemish. "We pluck the lemons; you get the plums." VW had sold just 330 cars in the U.S. in 1950; by the time Lemon ran in 1960, DDB's honesty-first campaigns had already helped push that past 150,000 a year, and the Beetle would go on to sell over a million. One word. Greatest ad of the 20th century.</div><div class="sb-close">tap back</div></div>
+    </div></div>
+    <div class="story-card" onclick="this.classList.toggle('flipped')"><div class="story-inner">
+      <div class="story-front"><div class="sf-quote">"Think small."</div><div class="sf-attr">DDB / Volkswagen &middot; 1959</div><div class="sf-tag">Inversion</div><div class="sf-hint">tap &rarr;</div></div>
+      <div class="story-back"><div class="sb-text">Every car ad in America said "Think big." Koenig and Krone put a tiny Beetle in a sea of white space with two words that inverted an entire culture's value system. Teenagers ripped the ad from magazines to hang in their rooms. The Beetle became a symbol of counterculture. Bernbach said the car was "honest" and deserved "a genuine approach." The compression wasn't just in the words, it was in the negative space. What you leave out is the message.</div><div class="sb-close">tap back</div></div>
+    </div></div>
+    <div class="story-card" onclick="this.classList.toggle('flipped')"><div class="story-inner">
+      <div class="story-front"><div class="sf-quote">"Write the truest sentence that you know."</div><div class="sf-attr">Hemingway &middot; A Moveable Feast</div><div class="sf-tag">Iceberg Theory</div><div class="sf-hint">tap &rarr;</div></div>
+      <div class="story-back"><div class="sb-text">A journalist before he was a novelist. Compression learned from deadlines and column inches, turned into philosophy. The Iceberg Theory: only show one-eighth. The reader feels the rest. "The dignity of movement of an iceberg is due to only one-eighth of it being above water." The six-word story attributed to him, "For sale: baby shoes, never worn", is probably apocryphal. But the myth attached itself to him because he's the person it should have been.</div><div class="sb-close">tap back</div></div>
+    </div></div>
+    <div class="story-card" onclick="this.classList.toggle('flipped')"><div class="story-inner">
+      <div class="story-front"><div class="sf-quote">"HEADLESS BODY IN TOPLESS BAR"</div><div class="sf-attr">Vincent Musetto &middot; New York Post &middot; 1983</div><div class="sf-tag">Five Words, Locked Bar</div><div class="sf-hint">tap &rarr;</div></div>
+      <div class="story-back"><div class="sb-text">April 14, 1983. A police bulletin lands at the Post about a decapitated body found in a Queens bar. Musetto, on front-page duty, sees the headline immediately. One problem: no one can confirm the bar is actually topless. They call the cops. Nothing. They call the bar. No answer. Minutes before deadline, city editor Charlie Carillo dispatches reporter Maralyn Matlick to the address. The bar is locked. She climbs up, peers through a window, and spots a sign inside: "Topless Dancing Tonight." She phones it in. The headline runs. Musetto wrote for the Post for 40 years. When the obituaries came in 2015, every one of them led with that line. His own favorite was "Granny Executed in Her Pink Pajamas." The screenwriter Peter Koper called headlines "the haikus of our times." Five words. One reporter on a ledge. Tabloid journalism's most famous sentence.</div><div class="sb-close">tap back</div></div>
+    </div></div>
+    <div class="story-card" onclick="this.classList.toggle('flipped')"><div class="story-inner">
+      <div class="story-front"><div class="sf-quote">"'No Way To Prevent This,' Says Only Nation Where This Regularly Happens."</div><div class="sf-attr">The Onion &middot; 2014&ndash;</div><div class="sf-tag">Compression By Repetition</div><div class="sf-hint">tap &rarr;</div></div>
+      <div class="story-back"><div class="sb-text">Jason Roeder wrote it in May 2014 after the Isla Vista killings. He was trying to find a way to keep writing about mass shootings without breaking the writers' room. His solution: don't write a new one. Run the same piece again. Change only the dateline and the photo. As of December 2025, The Onion has republished it 39 times. After Uvalde in 2022, the site's entire homepage became the same headline stacked on itself: Atlanta, El Paso, Boulder, Buffalo, Uvalde. Marnie Shure, then managing editor: "By re-running the same commentary it strengthens the original commentary tenfold each time." Roeder in 2018, after Parkland: "When I wrote this headline, I had no idea it would be applied to the high school a mile from my house." He said he'd rather be remembered for sillier work. "But I think I know my destiny." The compression move here is rare: a sentence so perfect the paper refuses to improve it, and the refusal becomes the argument. Beckett in a newsroom.</div><div class="sb-close">tap back</div></div>
+    </div></div>
+    <div class="story-card" onclick="this.classList.toggle('flipped')"><div class="story-inner">
+      <div class="story-front"><div class="sf-quote">"Sometimes a slide should be a single word."</div><div class="sf-attr">Nancy Duarte &middot; 2008</div><div class="sf-tag">The Limit</div><div class="sf-hint">tap &rarr;</div></div>
+      <div class="story-back"><div class="sb-text">Duarte built the deck for Al Gore's <em>An Inconvenient Truth</em>. The most famous slide in the film wasn't a sentence. It was a shape: a flat line for a thousand years, then a near-vertical spike. Gore climbed onto a scissor lift and rode it up the side of the spike, matching his body to the line. The words had run out. Two years later Duarte wrote <em>Slide:ology</em>. Her rule: if a slide has more than 75 words, it's a document. A slide should be readable in three seconds. Sometimes one word. Jobs had been doing it for twenty years. Duarte wrote it down.</div><div class="sb-close">tap back</div></div>
+    </div></div>
+  </div>
+</section>
+<div class="divider"></div>
+<section>
+  <div class="reveal"><p class="sl">02 &middot; The lineage</p><h2>Scroll the river &rarr;</h2></div>
+  <div class="river reveal">
+    <div class="rn"><div class="rn-era folk">Poetry &middot; 13th c.</div><div class="rn-name">Rumi</div><div class="rn-line">"The wound is the place where the Light enters you."</div><div class="rn-why">800 years old. Still the most shared poet on Instagram. Cohen's "crack where the light gets in" is the same image. Compression crosses centuries and languages because the human nerve doesn't change.</div></div>
+    <div class="rn"><div class="rn-era folk">Fiction &middot; 1859</div><div class="rn-name">Charles Dickens</div><div class="rn-line">"It was the best of times, it was the worst of times."</div><div class="rn-why">The original paradox opener. Everyone knows it. Nobody knows the rest of the sentence, which runs to 119 words. The compression happened in the culture's memory: we kept the first clause and threw away the paragraph. Dickens wrote the long version. The public wrote the short one.</div></div>
+    <div class="rn"><div class="rn-era folk">Fiction &middot; 1869</div><div class="rn-name">Leo Tolstoy</div><div class="rn-line">"All happy families are alike; each unhappy family is unhappy in its own way."</div><div class="rn-why">The greatest opening line in fiction. A thesis for an 864-page novel delivered in the first sentence. Everything that follows is footnotes to this claim. He could have started anywhere. He started with the whole argument.</div></div>
+    <div class="rn"><div class="rn-era folk">Fiction &middot; 1869</div><div class="rn-name">Fyodor Dostoevsky</div><div class="rn-line">"Beauty will save the world."</div><div class="rn-why">From The Idiot. He wrote the darkest novels in literature and kept arriving at the simplest truths. Five words that became a philosophy. Solzhenitsyn quoted them in his Nobel lecture. The darkest writer reaching for the lightest conclusion.</div></div>
+    <div class="rn"><div class="rn-era folk">Wit &middot; 1890s</div><div class="rn-name">Oscar Wilde</div><div class="rn-line">"We are all in the gutter, but some of us are looking at the stars."</div><div class="rn-why">Every Wilde line is a reversal machine. He compressed wit into a formula: state a position, then pivot with "but." The structure is so reliable it became a template. He was the first person to understand that a great line is a piece of intellectual engineering, not inspiration.</div></div>
+    <div class="rn"><div class="rn-era folk">Poetry &middot; ~1862</div><div class="rn-name">Emily Dickinson</div><div class="rn-line">"I'm Nobody! Who are you?"</div><div class="rn-why">Wrote 1,800 poems. Published ten. Found in a locked chest after she died, hand-sewn into booklets. Her editors removed her dashes and replaced them with commas because they thought they were errors. They weren't. The dashes were her compression tool: breath, silence, pivot, rupture. She was doing in the 1860s what lowercase texting does now. Using format to carry meaning.</div></div>
+    <div class="rn"><div class="rn-era folk">Poetry &middot; ~1863</div><div class="rn-name">Emily Dickinson</div><div class="rn-line">"Because I could not stop for Death — He kindly stopped for me."</div><div class="rn-why">Death as a gentleman caller. Terrifying and polite. The kindness is what makes it unbearable. Two lines that contain an entire theology.</div></div>
+    <div class="rn"><div class="rn-era folk">Fiction &middot; 1920s</div><div class="rn-name">Ernest Hemingway</div><div class="rn-line">"Write one true sentence. Write the truest sentence that you know."</div><div class="rn-why">A journalist before he was a novelist. He learned compression from deadlines and column inches. Then he turned it into a philosophy: the Iceberg Theory. Only show one-eighth. The reader feels the rest. "The dignity of movement of an iceberg is due to only one-eighth of it being above water."</div></div>
+    <div class="rn"><div class="rn-era folk">Legend &middot; ~1920s</div><div class="rn-name">"Hemingway"</div><div class="rn-line">"For sale: baby shoes, never worn."</div><div class="rn-why">Probably apocryphal, versions appeared in classifieds before Hemingway was born. But the myth attached itself to him because he's the person it should have been. The attribution is itself an act of compression: our culture needed a face for the idea that six words can break a heart.</div></div>
+    <div class="rn"><div class="rn-era folk">Fiction &middot; 1913</div><div class="rn-name">Marcel Proust</div><div class="rn-line">"The real voyage of discovery consists not in seeking new landscapes, but in having new eyes."</div><div class="rn-why">The man who wrote the longest novel in history, 1.2 million words, and yet his most famous insight fits in a sentence. The ultimate compression irony: the writer synonymous with length is remembered for his brevity.</div></div>
+    <div class="rn"><div class="rn-era folk">Fiction &middot; 1917</div><div class="rn-name">Franz Kafka</div><div class="rn-line">"A cage went in search of a bird."</div><div class="rn-why">Eight words. Reality inverted. The system hunting for someone to trap. Written as an aphorism in his notebooks. Kafka compressed dread into grammar: make the object the subject and the sentence becomes a nightmare.</div></div>
+    <div class="rn"><div class="rn-era blues">Blues &middot; 1937</div><div class="rn-name">Robert Johnson</div><div class="rn-line">"I got stones in my passway."</div><div class="rn-why">One image, whole life. 29 songs, two sessions, dead at 27. Every genre that followed inherited this template.</div></div>
+    <div class="rn"><div class="rn-era folk">Folk &middot; 1940</div><div class="rn-name">Woody Guthrie</div><div class="rn-line">"This land is your land."</div><div class="rn-why">Written in anger at "God Bless America." Two pronouns, one manifesto.</div></div>
+    <div class="rn"><div class="rn-era folk">Fiction &middot; 1945</div><div class="rn-name">George Orwell</div><div class="rn-line">"All animals are equal, but some animals are more equal than others."</div><div class="rn-why">A sentence that entered the language permanently. The word "but" does all the work. Every system of power, every rigged democracy, every corporate "we're all one team" speech collapses under those last five words. Political compression so effective it outlived its own novel.</div></div>
+    <div class="rn"><div class="rn-era folk">Theatre &middot; 1949</div><div class="rn-name">Arthur Miller</div><div class="rn-line">"Attention must be paid."</div><div class="rn-why">Linda Loman, demanding dignity for a man the world has discarded. Four words that changed American theatre. The passive voice is the point: not "pay attention to him" but "attention must be paid." The grammar makes it a moral law, not a request.</div></div>
+    <div class="rn"><div class="rn-era folk">Poetry &middot; 1951</div><div class="rn-name">Langston Hughes</div><div class="rn-line">"What happens to a dream deferred?"</div><div class="rn-why">A question that became a civil rights engine. The poem answers with images, "Does it dry up like a raisin in the sun?" Lorraine Hansberry took that simile and named an entire play after it. One poet's metaphor became another artist's title became a generation's mirror.</div></div>
+    <div class="rn"><div class="rn-era folk">Essay &middot; 1963</div><div class="rn-name">James Baldwin</div><div class="rn-line">"Not everything that is faced can be changed, but nothing can be changed until it is faced."</div><div class="rn-why">The most compressed essayist in American history. This sentence contains civil rights, psychology, personal accountability, and the entire case for confronting difficult truths. The symmetry is mathematical. The logic is airtight. And it fits on a protest sign.</div></div>
+    <div class="rn"><div class="rn-era folk">Folk &middot; 1963</div><div class="rn-name">Bob Dylan</div><div class="rn-line">"The answer is blowin' in the wind."</div><div class="rn-why">Written in ten minutes in a cafe. Refuses its own question. Cohen asked how long. Dylan said fifteen minutes. Cohen spent five years on "Hallelujah."</div></div>
+    <div class="rn"><div class="rn-era pop">Beatles &middot; 1967</div><div class="rn-name">Lennon &amp; McCartney</div><div class="rn-line">"All you need is love."</div><div class="rn-why">First global satellite broadcast. 400 million people. The brief: write something everyone on Earth can understand.</div></div>
+    <div class="rn"><div class="rn-era news">Headline &middot; 1969</div><div class="rn-name">The New York Times</div><div class="rn-line">"MEN WALK ON MOON."</div><div class="rn-why">July 21, 1969. Four words. Subject, verb, object. The biggest story in human history rendered in Saxon English a child could parse. No adjectives, no adverbs, no ornament. The headline that made broadsheet restraint feel like reverence.</div></div>
+    <div class="rn"><div class="rn-era pop">Solo &middot; 1971</div><div class="rn-name">John Lennon</div><div class="rn-line">"Imagine there's no heaven."</div><div class="rn-why">Yoko gave him a book of instructional poems. "Imagine" is a command disguised as a daydream. The softest revolutionary act ever recorded.</div></div>
+    <div class="rn"><div class="rn-era folk">Folk &middot; 1971</div><div class="rn-name">Joni Mitchell</div><div class="rn-line">"I've looked at life from both sides now."</div><div class="rn-why">Written at 23 after reading Saul Bellow on a plane. She'd never been in a plane before. The altitude was literal, she saw clouds from above for the first time and wrote the whole song.</div></div>
+    <div class="rn"><div class="rn-era pop">Soul &middot; 1971</div><div class="rn-name">Marvin Gaye</div><div class="rn-line">"What's going on?"</div><div class="rn-why">A question that's also an answer. Motown told him it was uncommercial. He refused to record anything else until they released it. An entire political awakening in three words and a question mark.</div></div>
+    <div class="rn"><div class="rn-era folk">Folk-Rock &middot; 1972</div><div class="rn-name">Neil Young</div><div class="rn-line">"It's better to burn out than to fade away."</div><div class="rn-why">Kurt Cobain quoted it in his suicide note. Young was devastated. A line intended as rock criticism became a death wish in someone else's mouth. The remix test, failed tragically.</div></div>
+    <div class="rn"><div class="rn-era pop">Soul &middot; 1973</div><div class="rn-name">Stevie Wonder</div><div class="rn-line">"You are the sunshine of my life."</div><div class="rn-why">He was 22 and had just seized creative control from Motown. He could have written anything complex. Instead he wrote the simplest possible declaration of love. Radical simplicity as artistic choice.</div></div>
+    <div class="rn"><div class="rn-era news">Headline &middot; 1975</div><div class="rn-name">Daily News</div><div class="rn-line">"FORD TO CITY: DROP DEAD."</div><div class="rn-why">October 30, 1975. Ford never actually said "drop dead." He refused a federal bailout for a bankrupt New York. The Daily News compressed the refusal into five words Ford spent the rest of his life regretting. Two months later he signed $2.3 billion in loans. He still lost New York in 1976 by a margin small enough that he blamed the headline for costing him the presidency. A compression that changed who ran the country.</div></div>
+    <div class="rn"><div class="rn-era punk">Punk-Poetry &middot; 1975</div><div class="rn-name">Patti Smith</div><div class="rn-line">"Jesus died for somebody's sins but not mine."</div><div class="rn-why">From a poem called "Oath" she wrote at 20. She picked up a bass bought for $40, hit a big E note, and recited it over Van Morrison's "Gloria." Years later, after breaking her neck falling off a stage, she changed one word: "but not mine" became "why not mine." One word. Whole spiritual journey.</div></div>
+    <div class="rn"><div class="rn-era pop">Rock &middot; 1977</div><div class="rn-name">David Bowie</div><div class="rn-line">"We can be heroes, just for one day."</div><div class="rn-why">Written in Berlin, looking at a couple kissing by the Wall. The "just for one day" is what makes it. Without those four words it's a bumper sticker. With them it's an admission that heroism is borrowed and therefore more precious.</div></div>
+    <div class="rn"><div class="rn-era folk">Poetry &middot; 1978</div><div class="rn-name">Maya Angelou</div><div class="rn-line">"Still I rise."</div><div class="rn-why">Three words as a complete answer to centuries of oppression. The pronoun is singular but the meaning is collective. She rises, therefore they all rise. Grammar as defiance.</div></div>
+    <div class="rn"><div class="rn-era folk">Fiction &middot; 1987</div><div class="rn-name">Toni Morrison</div><div class="rn-line">"Freeing yourself was one thing, claiming ownership of that freed self was another."</div><div class="rn-why">Nobel laureate. Every Morrison sentence carries the weight of history without ever sounding like a lecture. This one names the difference between legal freedom and psychological freedom. Between the act and the aftermath. She compressed entire fields of study, trauma theory, identity politics, post-colonial thought, into single sentences that read like scripture.</div></div>
+    <div class="rn"><div class="rn-era pop">Pop &middot; 1981</div><div class="rn-name">Squeeze</div><div class="rn-line">"Tempted by the fruit of another."</div><div class="rn-why">Difford wrote on the bus. Tilbrook added melody without discussing meaning. Distance is compression.</div></div>
+    <div class="rn"><div class="rn-era indie">Indie &middot; 1984</div><div class="rn-name">Morrissey</div><div class="rn-line">"I am human and I need to be loved."</div><div class="rn-why">No metaphor, no irony. The simplest sentences are the hardest to say aloud.</div></div>
+    <div class="rn"><div class="rn-era indie">Poetry &middot; 1984</div><div class="rn-name">Leonard Cohen</div><div class="rn-line">"It's a cold and it's a broken Hallelujah."</div><div class="rn-why">Five years. 80 draft verses. In his underwear at the Royalton Hotel, banging his head on the floor. His label rejected the album. Two decades later: the most covered song alive.</div></div>
+    <div class="rn"><div class="rn-era punk">Punk &middot; 1985</div><div class="rn-name">Billy Bragg</div><div class="rn-line">"Wearing badges is not enough."</div><div class="rn-why">Protest turned inward. The badge is easy activism, go further.</div></div>
+    <div class="rn"><div class="rn-era indie">Indie &middot; 1988</div><div class="rn-name">Prefab Sprout</div><div class="rn-line">"The king of rock 'n' roll."</div><div class="rn-why">McAloon: "building little machines out of words." Too literate for pop, too melodic for poetry.</div></div>
+    <div class="rn"><div class="rn-era indie">Poetry &middot; 1992</div><div class="rn-name">Leonard Cohen</div><div class="rn-line">"There is a crack in everything. That's how the light gets in."</div><div class="rn-why">Damage as doorway. Flaw as feature. Rumi said it 800 years earlier. Cohen would have known.</div></div>
+    <div class="rn"><div class="rn-era rap">Rap &middot; 1994</div><div class="rn-name">Nas</div><div class="rn-line">"Sleep is the cousin of death."</div><div class="rn-why">Twenty years old. Illmatic. The cousin, not the brother. Even the degree of separation is precise.</div></div>
+    <div class="rn"><div class="rn-era indie">Art-Rock &middot; 2000</div><div class="rn-name">Thom Yorke</div><div class="rn-line">"Everything in its right place."</div><div class="rn-why">His partner said it while tidying. Domestic language becomes existential dread through repetition.</div></div>
+    <div class="rn"><div class="rn-era indie">Fiction &middot; 1991</div><div class="rn-name">Don DeLillo</div><div class="rn-line">"The future belongs to crowds."</div><div class="rn-why">From Mao II. Five words that predicted social media, populism, and the death of the individual author. Written in 1991, it reads like a tweet from 2024. DeLillo compressed an entire sociological thesis into a sentence you can't stop thinking about.</div></div>
+    <div class="rn"><div class="rn-era indie">Criticism &middot; 2000</div><div class="rn-name">Martin Amis</div><div class="rn-line">"Style is not neutral."</div><div class="rn-why">Four words that justify every sentence in this site. How you say it changes what you say. The form is the content. Amis spent his career proving that prose style is a moral position, not decoration.</div></div>
+    <div class="rn"><div class="rn-era indie">Polemic &middot; 2007</div><div class="rn-name">Christopher Hitchens</div><div class="rn-line">"What can be asserted without evidence can also be dismissed without evidence."</div><div class="rn-why">Hitchens's Razor. Became a permanent tool of argument. The symmetry is the power: the sentence mirrors itself, the structure IS the logic. He made rhetoric into a blade.</div></div>
+    <div class="rn"><div class="rn-era indie">Fiction &middot; 2013</div><div class="rn-name">George Saunders</div><div class="rn-line">"What I regret most in my life are failures of kindness."</div><div class="rn-why">From a commencement speech at Syracuse. The most compressed fiction writer alive chose, in the one speech that would define him, to say the simplest possible thing. No irony. No craft. Just the truth, stated plain. The audience wept. The speech went viral. Twelve words.</div></div>
+    <div class="rn"><div class="rn-era rap">Rap &middot; 2003</div><div class="rn-name">Jay-Z</div><div class="rn-line">"I'm not a businessman, I'm a business, man."</div><div class="rn-why">One comma changes everything. Punctuation as power move.</div></div>
+    <div class="rn"><div class="rn-era rap">Screen &middot; 2008</div><div class="rn-name">Breaking Bad</div><div class="rn-line">"I am the one who knocks."</div><div class="rn-why">Walter White's entire transformation in one declaration. He isn't describing himself. He's constructing himself. The line is the moment the character becomes irreversible.</div></div>
+    <div class="rn"><div class="rn-era rap">Rap &middot; 2012</div><div class="rn-name">Kendrick</div><div class="rn-line">"A flower bloomed in a dark room."</div><div class="rn-why">Compton is the dark room. The question is the argument. Shakespeare's heir.</div></div>
+    <div class="rn"><div class="rn-era rap">Rap &middot; 2016</div><div class="rn-name">Chance</div><div class="rn-line">"I make 'em for freedom."</div><div class="rn-why">Free/freedom. One word cracked open. A business model becomes a moral position.</div></div>
+    <div class="rn"><div class="rn-era indie">Screen &middot; 2018</div><div class="rn-name">Succession</div><div class="rn-line">"You can't make a Tomlette without breaking some Greggs."</div><div class="rn-why">Tom Wambsgans mangles a proverb into desperation. Jesse Armstrong's dialogue compresses through mangling, characters reveal themselves by how badly they wield language.</div></div>
+    <div class="rn"><div class="rn-era indie">Screen &middot; 2023</div><div class="rn-name">Succession</div><div class="rn-line">"I love you but you are not serious people."</div><div class="rn-why">Logan Roy's verdict on his children. Nine words containing an entire family's tragedy. Love and dismissal in the same breath. The word "but" is the hinge the whole show turns on.</div></div>
+  </div>
+</section>
+
+<!-- ═══ 03: VENUES + TENSION + PATTERNS ═══ -->
+<div class="divider"></div>
+<section>
+  <div class="reveal"><p class="sl">03 &middot; Where, why, how</p></div>
+  <div class="venue-strip reveal">
+    <div class="vc"><h3>The Pit</h3><div class="ve">1599</div><div class="vr">"Hit the ear first."</div><p>3,000 bodies, bear-baiting next door.</p></div>
+    <div class="vc"><h3>Broadcast</h3><div class="ve">1940s</div><div class="vr">"Survive the crackle."</div><p>Churchill. Cadence replaces spectacle.</p></div>
+    <div class="vc"><h3>Record</h3><div class="ve">1950s</div><div class="vr">"Ride the beat."</div><p>Position in the bar changes meaning.</p></div>
+    <div class="vc"><h3>Feed</h3><div class="ve">2010s</div><div class="vr">"Survive the scroll."</div><p>Text, screenshot, chant, search term.</p></div>
+    <div class="vc"><h3>Prompt</h3><div class="ve">2020s&rarr;</div><div class="vr">"Survive the model."</div><p>The context window as venue.</p></div>
+  </div>
+  <div class="reveal" style="margin-top:2.5rem">
+    <h2>The engine of tension</h2>
+    <p>The strongest lines hold two opposing truths at once. Familiar enough to enter fast. New enough to wake the mind.</p>
+    <div class="tension-block"><div class="t-row"><span class="t-w l">Comfort</span><div class="t-s"></div><span class="t-w r">Danger</span></div><div class="t-res">"Not waving but drowning."</div></div>
+    <div class="tension-block"><div class="t-row"><span class="t-w l">Despair</span><div class="t-s"></div><span class="t-w r">Endurance</span></div><div class="t-res">"I can't go on. I'll go on."</div></div>
+    <div class="tension-block"><div class="t-row"><span class="t-w l">Darkness</span><div class="t-s"></div><span class="t-w r">Beauty</span></div><div class="t-res">"A flower bloomed in a dark room."</div></div>
+  </div>
+  <div class="reveal" style="margin-top:2.5rem">
+    <h2>Patterns worth stealing</h2>
+    <p>Tap a pattern to see it work.</p>
+    <div class="pills" id="pattern-pills">
+      <div class="pill" onclick="showPattern(this)" data-ex="&quot;Just do it.&quot; A command disguised as encouragement. No theory, no excuse.">Imperative</div>
+      <div class="pill" onclick="showPattern(this)" data-ex="&quot;Less is more.&quot; Tiny contradiction, huge reach. The sentence becomes an operating system.">Paradox</div>
+      <div class="pill" onclick="showPattern(this)" data-ex="&quot;Not waving but drowning.&quot; Ordinary words, devastating flip. The reader's assumptions collapse.">Reversal</div>
+      <div class="pill" onclick="showPattern(this)" data-ex="&quot;Of the people, by the people, for the people.&quot; Repetition plus tiny variation equals inevitability.">Triad</div>
+      <div class="pill" onclick="showPattern(this)" data-ex="&quot;I don't make songs for free, I make 'em for freedom.&quot; Chance cracks one word open to reveal another hiding inside.">Word-Split</div>
+      <div class="pill" onclick="showPattern(this)" data-ex="&quot;A flower bloomed in a dark room.&quot; Kendrick doesn't explain. He paints. The picture does the thinking.">Image</div>
+      <div class="pill" onclick="showPattern(this)" data-ex="&quot;Parting is such sweet sorrow.&quot; Two words that shouldn't touch, forced together. The contradiction compounds.">Oxymoron</div>
+      <div class="pill" onclick="showPattern(this)" data-ex="&quot;Nobody: ... Absolutely nobody: ...&quot; The meme's move. Give the structure, let the audience finish it.">Template</div>
+    </div>
+    <div class="pill-example" id="pill-example" style="margin-top:1rem;font-family:var(--serif);font-size:1.1rem;font-style:italic;color:var(--gold);min-height:3em;line-height:1.6;opacity:0;transition:opacity .4s"></div>
+  </div>
+</section>
+
+<!-- ═══ 04: THE MANUAL ═══ -->
+<div class="divider"></div>
+<section>
+  <div class="reveal">
+    <p class="sl">04 &middot; The manual</p>
+    <h2>In 1946, Orwell wrote the rules. Then he ran them backwards.</h2>
+  </div>
+
+  <div class="reveal" style="margin-top:1.5rem">
+    <p>In his essay <em>Politics and the English Language</em>, George Orwell took a verse from Ecclesiastes and translated it into the worst modern English he could write. He wanted to show what bad writing does to good ideas. What follows is his parody, his original, and the six rules he used to tell them apart.</p>
+    <p>Read it the way Orwell didn't write it. Start at the bottom.</p>
+  </div>
+
+  <div class="reveal" style="margin-top:2.5rem">
+    <div style="background:var(--bg2);padding:1.8rem 1.8rem 1.5rem;border-left:3px solid var(--red)">
+      <div style="font-family:var(--mono);font-size:.5rem;letter-spacing:.25em;text-transform:uppercase;color:var(--dim);margin-bottom:.8rem">The bloat</div>
+      <p style="font-family:var(--serif);font-size:clamp(1.1rem,2vw,1.35rem);font-style:italic;line-height:1.5;color:var(--fg);max-width:none;margin:0 0 .8rem">"Objective consideration of contemporary phenomena compels the conclusion that success or failure in competitive activities exhibits no tendency to be commensurate with innate capacity, but that a considerable element of the unpredictable must invariably be taken into account."</p>
+      <div style="font-family:var(--mono);font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)">George Orwell &middot; 1946 &middot; 38 words &middot; 90 syllables &middot; a deliberate parody</div>
+    </div>
+  </div>
+
+  <div class="reveal" style="margin-top:2rem">
+    <h3 style="font-family:var(--serif);font-weight:400;font-size:clamp(1.1rem,2vw,1.4rem);margin-bottom:1rem">The six rules, applied</h3>
+    <div style="display:grid;gap:1rem">
+      <div style="background:var(--bg2);padding:1rem 1.2rem;border-left:2px solid var(--gold)">
+        <div style="font-family:var(--mono);font-size:.5rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem">Rule 1</div>
+        <p style="font-family:var(--serif);font-size:1rem;font-style:italic;margin:0 0 .4rem;color:var(--fg)">Never use a metaphor, simile, or figure of speech you are used to seeing in print.</p>
+        <p style="font-size:.78rem;color:var(--dim);margin:0">Strips the dead phrases. "Taken into account" goes. So does every off-the-shelf clause the reader's eye would skim.</p>
+      </div>
+      <div style="background:var(--bg2);padding:1rem 1.2rem;border-left:2px solid var(--gold)">
+        <div style="font-family:var(--mono);font-size:.5rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem">Rule 2</div>
+        <p style="font-family:var(--serif);font-size:1rem;font-style:italic;margin:0 0 .4rem;color:var(--fg)">Never use a long word where a short one will do.</p>
+        <p style="font-size:.78rem;color:var(--dim);margin:0"><em>Objective, consideration, contemporary, phenomena, compels, commensurate, innate, capacity, considerable, invariably</em>. Ten Latinate words in one sentence. Every one has a shorter Saxon cousin.</p>
+      </div>
+      <div style="background:var(--bg2);padding:1rem 1.2rem;border-left:2px solid var(--gold)">
+        <div style="font-family:var(--mono);font-size:.5rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem">Rule 3</div>
+        <p style="font-family:var(--serif);font-size:1rem;font-style:italic;margin:0 0 .4rem;color:var(--fg)">If it is possible to cut a word out, always cut it out.</p>
+        <p style="font-size:.78rem;color:var(--dim);margin:0">The hardest rule because it never stops applying. You cut, then cut again, then cut once more. You stop when removing the next word breaks the meaning. Not before.</p>
+      </div>
+      <div style="background:var(--bg2);padding:1rem 1.2rem;border-left:2px solid var(--gold)">
+        <div style="font-family:var(--mono);font-size:.5rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem">Rule 4</div>
+        <p style="font-family:var(--serif);font-size:1rem;font-style:italic;margin:0 0 .4rem;color:var(--fg)">Never use the passive where you can use the active.</p>
+        <p style="font-size:.78rem;color:var(--dim);margin:0">"Must invariably be taken into account" is the passive hiding the actor. Active voice forces you to name who does what. Hiding is the first sign a sentence has nothing to say.</p>
+      </div>
+      <div style="background:var(--bg2);padding:1rem 1.2rem;border-left:2px solid var(--gold)">
+        <div style="font-family:var(--mono);font-size:.5rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem">Rule 5</div>
+        <p style="font-family:var(--serif);font-size:1rem;font-style:italic;margin:0 0 .4rem;color:var(--fg)">Never use a foreign phrase, a scientific word, or a jargon word if you can think of an everyday English equivalent.</p>
+        <p style="font-size:.78rem;color:var(--dim);margin:0">This is Rule 2's twin. Jargon hides behind prestige. Everyday words have nowhere to hide, which is why they land.</p>
+      </div>
+      <div style="background:var(--bg2);padding:1rem 1.2rem;border-left:2px solid var(--purple)">
+        <div style="font-family:var(--mono);font-size:.5rem;letter-spacing:.25em;text-transform:uppercase;color:var(--purple);margin-bottom:.3rem">Rule 6 &middot; the meta-rule</div>
+        <p style="font-family:var(--serif);font-size:1rem;font-style:italic;margin:0 0 .4rem;color:var(--fg)">Break any of these rules sooner than say anything outright barbarous.</p>
+        <p style="font-size:.78rem;color:var(--dim);margin:0">Orwell's final rule is the one that saves the other five from becoming a cage. The rules serve the line. If the line needs a long word, use it. If the line needs a passive, use it. The rules are for when you don't know what you're doing yet.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal" style="margin-top:2.5rem">
+    <div style="background:var(--bg2);padding:1.8rem 1.8rem 1.5rem;border-left:3px solid var(--gold)">
+      <div style="font-family:var(--mono);font-size:.5rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem">The original</div>
+      <p style="font-family:var(--serif);font-size:clamp(1.2rem,2.4vw,1.6rem);font-style:italic;line-height:1.5;color:var(--gold);max-width:none;margin:0 0 .8rem">"I returned and saw under the sun, that the race is not to the swift, nor the battle to the strong, neither yet bread to the wise, nor yet riches to men of understanding, nor yet favour to men of skill; but time and chance happeneth to them all."</p>
+      <div style="font-family:var(--mono);font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)">Ecclesiastes 9:11 &middot; King James Version &middot; 1611 &middot; 49 words &middot; 60 syllables &middot; six vivid images</div>
+    </div>
+  </div>
+
+  <div class="reveal" style="margin-top:2rem">
+    <p>Orwell's parody is 80 years old and exists only as a warning. The King James verse is 415 years old and still gets quoted at funerals and in headlines. "The race is not to the swift" survived because the translators followed rules Orwell hadn't written yet. Orwell wrote the rules by reverse-engineering what they did.</p>
+    <p>You watched this same move at the top of this site, performed on a marketing line. Here it is performed on a Bible verse. The rules don't care what the line is for.</p>
+  </div>
+</section>
+
+<!-- ═══ 05: THE POST-LITERATE SHAKESPEARE ═══ -->
+<div class="divider"></div>
+<section>
+  <div class="reveal">
+    <p class="sl">05 &middot; Everyone is Shakespeare now</p>
+    <h2>The emoticon, the emoji, the meme, and the end of the single author.</h2>
+  </div>
+  <div class="story-grid reveal">
+    <div class="story-card" onclick="this.classList.toggle('flipped')"><div class="story-inner">
+      <div class="story-front"><div class="sf-quote">:-)</div><div class="sf-attr">Scott Fahlman &middot; Sept 19, 1982</div><div class="sf-tag">The First Emoticon</div><div class="sf-hint">tap &rarr;</div></div>
+      <div class="story-back"><div class="sb-text">Carnegie Mellon. Jokes were being misread on a bulletin board. Someone suggested a mercury spill in an elevator was real. Fahlman, an AI researcher, proposed three keystrokes: colon, dash, parenthesis. "Read it sideways." It solved a problem text created: tone vanished when the face disappeared. Three characters replaced an entire human expression. Nabokov predicted it in 1969: "There should exist a special typographical sign for a smile."</div><div class="sb-close">tap back</div></div>
+    </div></div>
+    <div class="story-card" onclick="this.classList.toggle('flipped')"><div class="story-inner">
+      <div class="story-front"><div class="sf-quote">&#128514;</div><div class="sf-attr">Shigetaka Kurita &middot; 1999</div><div class="sf-tag">The First Emoji</div><div class="sf-hint">tap &rarr;</div></div>
+      <div class="story-back"><div class="sb-text">Kurita was designing for a Japanese mobile carrier. He drew 176 tiny 12x12 pixel images to help people communicate emotion in 250-character messages. "Emoji" means "picture character" in Japanese, the resemblance to "emotion" is pure coincidence. A language barrier became a universal language. By 2015, the Oxford Dictionary named an emoji, Face with Tears of Joy, its Word of the Year. A picture was literally the word.</div><div class="sb-close">tap back</div></div>
+    </div></div>
+    <div class="story-card" onclick="this.classList.toggle('flipped')"><div class="story-inner">
+      <div class="story-front"><div class="sf-quote">"it me"</div><div class="sf-attr">The Meme Grammar &middot; 2010s</div><div class="sf-tag">Post-Literate Compression</div><div class="sf-hint">tap &rarr;</div></div>
+      <div class="story-back"><div class="sb-text">Meme language developed its own grammar: "it me" (recognition), "this is fine" (denial), "I'm in this photo" (confession), "nobody: ..." (unsolicited behavior). None of these follow standard English. All of them compress a paragraph of feeling into a phrase. The meme is the first literary form where the audience writes the next line. Shakespeare gave the groundlings words to repeat. The meme gives them a template to fill.</div><div class="sb-close">tap back</div></div>
+    </div></div>
+  </div>
+  <div class="reveal" style="margin-top:2rem">
+    <h3>The insight we almost missed</h3>
+    <p>Shakespeare's Globe had one playwright and 3,000 groundlings. The groundlings received the line. They repeated it, carried it, kept it alive across centuries, but they didn't write the next one.</p>
+    <p>The memetic age inverted this. There is no single Shakespeare of the meme. And that's not a failure, it's the point. The template replaced the author. "Nobody: ..." has been filled in a million times by a million people. "This is fine" has been remixed into every possible context. The line isn't finished until the audience finishes it.</p>
+    <p>Is this what post-literate means? Not the death of reading but the death of the single voice? Not illiteracy but <em>distributed authorship</em>? Shakespeare compressed the world into lines that travelled from his pen to the groundling's mouth. Now the compression happens the other way: the crowd generates the line, and the best version survives. Evolution, not creation. Everyone is a potential Shakespeare, not because everyone is brilliant, but because the system selects for brilliance at scale.</p>
+    <p>The emoticon started it. Three keystrokes replaced a face. The emoji extended it. A picture became a word. The meme completed it. A template became a literature. The TikTok hashtag took it further. And now the prompt continues it. A sentence steers a machine.</p>
+    <p>From one playwright, 3,000 groundlings. To zero playwrights, 3 billion groundlings, all writing at once.</p>
+  </div>
+
+  <div class="story-grid reveal" style="margin-top:2rem">
+    <div class="story-card" onclick="this.classList.toggle('flipped')"><div class="story-inner">
+      <div class="story-front"><div class="sf-quote">#GirlDinner #BookTok #CleanGirl #MainCharacter</div><div class="sf-attr">TikTok &middot; 2020s</div><div class="sf-tag">The Concept Handle</div><div class="sf-hint">tap &rarr;</div></div>
+      <div class="story-back"><div class="sb-text">The TikTok hashtag isn't a sentence. It isn't even a phrase. It's a concept handle, a single compound word that names a feeling, aesthetic, or identity that didn't have a name before. #GirlDinner isn't about dinner. It's about permission to not perform domesticity. #MainCharacter isn't about characters. It's about choosing to narrate your own life. These aren't beautifully forged language. They're acts of naming, and naming is the oldest power in language. Adam's first job was giving things names.</div><div class="sb-close">tap back</div></div>
+    </div></div>
+    <div class="story-card" onclick="this.classList.toggle('flipped')"><div class="story-inner">
+      <div class="story-front"><div class="sf-quote">"Delulu is the solulu."</div><div class="sf-attr">TikTok &middot; 2023</div><div class="sf-tag">Post-Literate Proverb</div><div class="sf-hint">tap &rarr;</div></div>
+      <div class="story-back"><div class="sb-text">A proverb born on the feed. "Delusional is the solution" compressed into baby-talk rhyme. It carries an entire philosophy: optimism as strategy, self-deception as fuel, the refusal to be realistic as a form of power. It does what "Less is more" did, packages a worldview as a sound bite. But it was created by no one and everyone. It has no Mies van der Rohe. It has a million co-authors who all independently recognized the same truth.</div><div class="sb-close">tap back</div></div>
+    </div></div>
+    <div class="story-card" onclick="this.classList.toggle('flipped')"><div class="story-inner">
+      <div class="story-front"><div class="sf-quote">"6-7."</div><div class="sf-attr">Skrilla &middot; 2025</div><div class="sf-tag">Null Compression</div><div class="sf-hint">tap &rarr;</div></div>
+      <div class="story-back"><div class="sb-text">Skrilla recorded "Doot Doot" in ten minutes after crashing his car. The "6-7" ad-lib referenced a Philadelphia street he didn't even live on. TikTokers paired the audio with clips of LaMelo Ball (6'7"). A kid yelled it at a high school basketball game. That clip went viral. By fall 2025, nine-year-olds were chanting it in schoolyards without knowing why. One mother had to tell her son it didn't mean anything. He couldn't sleep that night. "6-7" is the shadow version of every other card on this site: maximum reach, zero payload. No author. No meaning. A whole generation of kids chanting two numbers at each other because the algorithm decided they should.</div><div class="sb-close">tap back</div></div>
+    </div></div>
+  </div>
+
+  <div class="reveal" style="margin-top:2.5rem">
+    <h3>The generational divide</h3>
+    <p>We now have two fluent populations who struggle to read each other.</p>
+    <p>One speaks the <strong>classical language</strong>, beautifully forged sentences, literary compression, the tradition from Shakespeare through Cohen to Kendrick. Words chosen for rhythm, image, tension. This is the language of books, speeches, essays, and songs. Its masters are celebrated. Its skills are taught in schools.</p>
+    <p>The other speaks <strong>the new compression</strong>, hashtags, memes, emoji sequences, algospeak, vibe-based naming, format-as-tone. #GirlDinner. "It's giving." "No cap." "Delulu is the solulu." This language is not less sophisticated. It is differently sophisticated. It compresses not through careful word choice but through concept creation, template reuse, and distributed authorship. Its masters are anonymous. Its skills are learned by osmosis.</p>
+    <p>The implications run deep. <strong>Parents</strong> can't read their children's emotional register because the tone lives in casing and punctuation they don't parse. <strong>Teachers</strong> are grading essays in a language their students experience as formal and alien, while the students' actual expressive fluency lives in a medium the teachers don't take seriously. <strong>Brands</strong> that try to speak meme sound like parents trying to use slang, the uncanny valley of corporate tone. <strong>Politicians</strong> who master the classical language fail on TikTok; those who master TikTok often can't sustain a complex argument.</p>
+    <p>And here's the thing neither side sees clearly: <strong>both languages are compression</strong>. "Not waving but drowning" and "This is fine" do the same work, they hold despair and endurance in one image. One won a place in the literary canon. The other won the internet. The kid who posts "it me" under a picture of a confused cat and the poet who writes "I contain multitudes" are performing the same act of recognition and compression. They just don't know it yet.</p>
+    <p>The real fluency, the one that will matter most, is bilingualism. The ability to write a sentence that works in an essay <em>and</em> a caption. That compresses like Cohen <em>and</em> travels like a meme. That has rhythm Shakespeare would recognize <em>and</em> a format a 16-year-old would share.</p>
+    <p>That's what this site has been about from the beginning. Not choosing between the carved stone and the feed. Learning to carve stone <em>that also survives the feed</em>.</p>
+  </div>
+</section>
+
+<!-- ═══ POSTSCRIPT: HOW A MACHINE SEES A LINE ═══ -->
+<div class="divider"></div>
+<section>
+  <div class="reveal">
+    <p class="sl">Postscript</p>
+    <h2>How a Machine Sees a Line</h2>
+  </div>
+
+  <div class="reveal" style="margin-top:1rem">
+    <h3>The 60-second version of how this works</h3>
+    <p>In 2017, a team at Google published a paper called "Attention Is All You Need." Eight researchers, five words that changed computing. The title itself is an act of compression.</p>
+    <p>Before this paper, machines read language the way you read a ticker tape: one word at a time, left to right, trying to remember what came before. Long sentences were a disaster. By the time the machine reached "drowning," it had half-forgotten "waving."</p>
+    <p>The transformer architecture solved this by letting every word look at every other word simultaneously and ask: <em>how much should I care about you?</em> That question, computed as a mathematical score, is called <strong>attention</strong>.</p>
+    <p>The machine doesn't "read" a sentence. It builds a web of relationships. Each word gets three roles: a <strong>query</strong> (what am I looking for?), a <strong>key</strong> (what do I offer?), and a <strong>value</strong> (what information do I carry?). Every word's query checks every other word's key. High match? Strong attention bond. Low match? The model barely notices the connection.</p>
+    <p>This is what the visualizer below shows. The arcs are attention bonds. Thick bright lines mean the model grips the connection tightly. Faint lines mean it doesn't care.</p>
+  </div>
+
+  <!-- ATTENTION VISUALIZER -->
+  <div class="reveal">
+    <div style="display:flex;gap:.4rem;margin-bottom:1.5rem;flex-wrap:wrap">
+      <button class="att-btn active" data-att="0">Not waving but drowning</button>
+      <button class="att-btn" data-att="1">The individual was experiencing distress</button>
+      <button class="att-btn" data-att="2">A flower bloomed in a dark room</button>
+      <button class="att-btn" data-att="3">Just do it</button>
+      <button class="att-btn" data-att="4">Implement the strategy</button>
+    </div>
+    <div class="att-wrap">
+      <canvas id="att-canvas" width="800" height="320"></canvas>
+      <div class="att-insight" id="att-insight"></div>
+    </div>
+  </div>
+
+  <div class="reveal" style="margin-top:2.5rem">
+    <h3>Why compressed language lights up</h3>
+    <p>"Not waving but drowning" creates unusually dense attention bonds. The model can't process "waving" without attending heavily to "drowning." The tension between them, the reversal, the surprise, creates a tight web of mutual attention. Every word is load-bearing.</p>
+    <p>Now switch to "The individual was experiencing significant emotional distress." Attention scatters. "Individual" barely connects to "distress." "Significant" connects to nothing strongly. The meaning arrives, but the <em>force</em> doesn't. The model can parse it, but it can't grip it.</p>
+    <p>This is the technical confirmation of what poets have known for centuries: compression creates force. Unnecessary words don't just waste space. They dilute the bonds between the words that matter.</p>
+  </div>
+
+  <div class="reveal" style="margin-top:2.5rem">
+    <h3>The discovery of emotion circuits</h3>
+    <p>In 2025, researchers made a striking discovery. LLMs don't just match words to statistical patterns. They develop an <strong>internal geometry of emotion</strong>. Positive emotions cluster in one region of the model's activation space. Negative emotions cluster in another. Neutral sits at the center. This structure emerges without anyone programming it. The model learns it from the shape of human language itself.</p>
+    <p>More remarkably, researchers found specific <strong>emotion neurons</strong> and <strong>attention heads</strong> that form what they call emotion circuits. These aren't metaphors. They're measurable, controllable pathways. By modulating these circuits directly, researchers achieved 99.65% accuracy in controlling which emotion a model expresses, better than prompting, better than fine-tuning.</p>
+    <p>What this means: early LLMs treated emotion as word-frequency statistics. "Sad" appeared near "tears" and "loss," so the model associated them. Current models have genuine internal emotional structure, organized, consistent, and increasingly controllable. They can represent the devastation of "Not waving but drowning" structurally, even if they can't feel it.</p>
+  </div>
+
+  <div class="reveal" style="margin-top:2.5rem">
+    <h3>Where this goes next</h3>
+    <p>The gap between representing emotion and feeling emotion is the gap we're all watching. Three things are converging:</p>
+    <p><strong>Attention is getting longer.</strong> Early transformers could hold 512 tokens in their context window. Current models hold millions. The venue is expanding. A model that can attend across an entire book, an entire conversation, an entire life of interactions, changes what compression means. The "line" might become a thread woven across thousands of exchanges.</p>
+    <p><strong>Emotion circuits are getting deeper.</strong> Researchers can already steer a model's emotional expression by flipping specific neurons. As these circuits become better understood, the line between "generates text that sounds sad" and "represents sadness internally in a way that shapes all subsequent processing" gets harder to draw.</p>
+    <p><strong>Prompting is becoming a craft.</strong> "Write a sad poem" produces mush. "Four lines about a dog who waits by a door that won't open again" produces something real. Image beats abstraction. Specificity beats instruction. The rules of good prompting are the rules of good writing: compress, show, find the tension, make every word load-bearing. Shakespeare's groundlings and today's prompt engineers need the same skill: the ability to say exactly what you mean in the fewest possible words that carry the most possible force.</p>
+  </div>
+
+  <div class="reveal" style="margin-top:2rem">
+    <div class="ps"><h3>The Prompt as Poem</h3><p>"Write a sad poem" &rarr; mush. "Four lines about a dog who waits by a door that won't open again" &rarr; real. The craft hasn't changed. The audience has.</p></div>
+    <div class="ps"><h3>Stage Directions for AI</h3><p>"Exit, pursued by a bear." Five words, whole scene. System prompts work the same way. "You are a concise editor who values rhythm" outperforms three paragraphs of rules.</p></div>
+    <div class="ps"><h3>The Context Window as Venue</h3><p>Pit, radio, vinyl, feed, context window. Each venue demands a different kind of compression. The newest audience processes tokens, not syllables, but the strongest lines survive both.</p></div>
+    <div class="ps"><h3>What Doesn't Change</h3><p>Machines generate a million sentences. They can't yet feel why one is better. The catch in the throat, the nod on the bus, the line you murmur three days later. The living wire is still human. For now.</p></div>
+  </div>
+
+  <div class="reveal" style="margin-top:3rem">
+    <h3>The final frontier: zero words</h3>
+    <p>Everything in this site has assumed a human audience. A groundling, a listener, a reader, a scroller. But what happens when the audience isn't human at all?</p>
+    <p>In February 2025, two engineers built GibberLink at a hackathon. It lets AI agents call each other on the phone. The moment one agent realizes it's talking to another, both drop English and switch to a robotic data signal. Fifteen million people watched the demo: two polite voices, a burst of modem noise, silence, task complete.</p>
+    <p>This is compression with nothing left to compress. Not fewer words. <strong>Zero words.</strong> When speaker and listener are both machines, human language is overhead. The beauty, the rhythm, the tension, the image, wasted on an audience that processes tokens, not feelings. Hamlet's question is a waste of tokens.</p>
+    <p>But humans still need Hamlet's question. And the words they reach for keep coming from the strangest places.</p>
+    <p>In 2019, an anonymous user on 4chan posted a photograph of a fluorescent-lit, yellow-walled room with a few lines of text describing "the Backrooms," an endless liminal space you slip into if you no-clip through reality. No author. No name. Just a paragraph on a message board.</p>
+    <p>On May 29, 2026, A24 releases <em>Backrooms</em> as a feature film. Kane Parsons directs. He was a teenager when, in January 2022, he made the first YouTube video inspired by the post. He's 20 now, the youngest filmmaker in A24's history. Chiwetel Ejiofor stars. A 4chan paragraph became a YouTube series, then a mythology, then a studio film. From a message board to a multiplex in seven years.</p>
+    <p>That's the story this whole site has been telling. Not that words are dying. That words are migrating. They start in the pit and end in the canon. They start on a napkin and end as a $9 billion tagline. They start in a hotel room in underwear and end as the most covered song alive. They start on 4chan and end at A24.</p>
+    <p>The form changes. The venue changes. The author disappears. <strong>But the line still has to land.</strong></p>
+  </div>
+</section>
+
+<footer>
+  <div class="reveal">
+    <p class="cq">"Compressed until it glows."</p>
+    <p class="cn">From temple stone to context window.</p>
+  </div>
+</footer>
+
+<script>
+// ═══ REVEAL + DIVIDERS ═══
+const obs = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: .1, rootMargin: '0px 0px -20px 0px' });
+document.querySelectorAll('.reveal,.divider').forEach(el => obs.observe(el));
+
+// ═══ HERO SCROLL COMPRESSION ═══
+const heroH1 = document.getElementById('hero-h1');
+const heroLine2 = document.getElementById('hero-line2');
+const heroSub = document.getElementById('hero-sub');
+
+window.addEventListener('scroll', () => {
+  const heroEl = document.querySelector('.hero');
+  const scrolled = window.scrollY;
+  const heroH = heroEl.offsetHeight / 2;
+  const progress = Math.min(scrolled / heroH, 1);
+
+  // Letters compress together
+  const spacing = (1 - progress) * 0.05;
+  heroH1.style.letterSpacing = spacing + 'em';
+  const scale = 1 - progress * 0.3;
+  heroH1.style.transform = 'scale(' + scale + ')';
+  if (progress > 0.3) {
+    heroLine2.classList.add('show');
+    heroSub.classList.add('show');
+  }
+}, { passive: true });
+
+// ═══ THE TRANSFORMATION ═══
+const shatterText = "This device lets you carry a huge amount of music with you in a way that feels personal portable and easy instead of managing CDs or bulky players";
+const shatterBox = document.getElementById('shatter-box');
+const shNarration = document.getElementById('sh-narration');
+
+const words = shatterText.split(' ');
+words.forEach((w, i) => {
+  const span = document.createElement('span');
+  span.className = 'shatter-word';
+  span.textContent = w;
+  span.dataset.index = i;
+  const angle = Math.random() * 360;
+  const dist = 200 + Math.random() * 500;
+  span.style.setProperty('--tx', (Math.cos(angle * Math.PI/180) * dist) + 'px');
+  span.style.setProperty('--ty', (Math.sin(angle * Math.PI/180) * dist) + 'px');
+  span.style.setProperty('--rot', (Math.random() * 180 - 90) + 'deg');
+  span.style.transitionDelay = (Math.random() * 0.5) + 's';
+  shatterBox.appendChild(span);
+});
+
+// Typewriter narration, words appear at reading pace
+function typeNarrate(html, callback) {
+  shNarration.classList.remove('show');
+  setTimeout(() => {
+    shNarration.innerHTML = '';
+    shNarration.classList.add('show');
+    // Strip HTML tags for typing, but keep the step-label
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+    const labelEl = temp.querySelector('.step-label');
+    const labelText = labelEl ? labelEl.textContent : '';
+    const bodyText = temp.textContent.replace(labelText, '').trim();
+
+    // Show label immediately
+    if (labelText) {
+      const labelSpan = document.createElement('span');
+      labelSpan.className = 'step-label';
+      labelSpan.textContent = labelText + ' ';
+      shNarration.appendChild(labelSpan);
+    }
+
+    // Type the rest word by word
+    const bodyWords = bodyText.split(/\s+/);
+    let idx = 0;
+    function typeNext() {
+      if (idx >= bodyWords.length) {
+        if (callback) setTimeout(callback, 2500);
+        return;
+      }
+      const word = bodyWords[idx];
+      shNarration.appendChild(document.createTextNode(word + ' '));
+      idx++;
+      // Pacing: slow, deliberate, like someone speaking carefully
+      let delay = 160; // base speed: one word per heartbeat
+      if (word.endsWith('.') || word.endsWith('!')) delay = 900;
+      else if (word.endsWith(',') || word.endsWith(';')) delay = 500;
+      else if (word.endsWith(':')) delay = 650;
+      else if (word.endsWith('\u201D') || word.endsWith('"')) delay = 600;
+      else if (word === '\u2014' || word.includes('\u2014')) delay = 500;
+      setTimeout(typeNext, delay);
+    }
+    typeNext();
+  }, 300);
+}
+
+function runStage(n, allW, next) {
+  switch(n) {
+    case 0:
+      typeNarrate('<span class="step-label">October 23, 2001. Cupertino.</span> Steve Jobs walks on stage. He talks about how current MP3 players are unusable. He talks about storing \u201Ca lot of songs \u2014 say, a thousand.\u201D He has the message in his head. The product doesn\u2019t even have a name yet.', next);
+      break;
+    case 1:
+      [0,1,2,3,4,6,7,9,10,11,12,13,19,20,21,22].forEach(i => { if(allW[i]) allW[i].classList.add('strikeout'); });
+      [5,8,14,15,16,17,18].forEach(i => { if(allW[i]) allW[i].classList.add('highlight'); });
+      typeNarrate('<span class="step-label">The reveal.</span> Jobs pauses. \u201CI have this perfect product right here \u2014 in my pocket.\u201D He pulls a white device from his jeans. \u201CThe iPod. 1,000 songs in your pocket.\u201D The engineers wanted to talk about 5GB hard drives. Jobs gave them a number and a body part.', next);
+      break;
+    case 2:
+      typeNarrate('<span class="step-label">Two years later.</span> Jobs is in a conference room. His agency has brought silhouette posters \u2014 black dancing figures against neon. Jobs shakes his head: \u201CIt doesn\u2019t show the product.\u201D James Vincent, a former DJ on the team, remembers 2001. \u201CWhat if we add: 1,000 songs in your pocket?\u201D Jobs approves. Then claims the iconic campaign was his idea.', next);
+      break;
+    case 3:
+      typeNarrate('<span class="step-label">Everything that isn\u2019t the living wire \u2014</span>', () => {
+        allW.forEach(w => { w.classList.add('dead'); });
+        setTimeout(next, 3500);
+      });
+      break;
+    case 4:
+      shatterBox.innerHTML = '';
+      const r = document.createElement('div');
+      r.className = 'shatter-result';
+      r.textContent = '1,000 songs in your pocket.';
+      shatterBox.appendChild(r);
+      requestAnimationFrame(() => { r.classList.add('shown'); });
+      typeNarrate('<span class="step-label">What remains.</span> Every journalist used those six words as a headline. Every buyer repeated them to a friend. Within a decade: $877M to $9.2B. The message came before the name. The gesture came before the campaign. The pocket is the revolution.', () => {
+        document.getElementById('sh-stats').classList.add('show');
+      });
+      break;
+  }
+}
+
+let shattered = false;
+const shatterObs = new IntersectionObserver(es => {
+  es.forEach(e => {
+    if (e.isIntersecting && !shattered) {
+      shattered = true;
+      const allW = document.querySelectorAll('.shatter-word');
+      // Chain stages: each starts when the previous finishes typing
+      runStage(0, allW, () => {
+        runStage(1, allW, () => {
+          runStage(2, allW, () => {
+            runStage(3, allW, () => {
+              runStage(4, allW);
+            });
+          });
+        });
+      });
+    }
+  });
+}, { threshold: .5 });
+shatterObs.observe(document.getElementById('shatter'));
+
+
+// ═══ PATTERN PILLS ═══
+function showPattern(pill) {
+  const ex = pill.getAttribute('data-ex');
+  const display = document.getElementById('pill-example');
+  // Toggle active state
+  document.querySelectorAll('#pattern-pills .pill').forEach(p => p.classList.remove('active'));
+  pill.classList.add('active');
+  // Show example with fade
+  display.style.opacity = '0';
+  setTimeout(() => {
+    display.innerHTML = ex;
+    display.style.opacity = '1';
+  }, 200);
+}
+
+// ═══ SCROLL MORPH — the A+ moment ═══
+const morphEl = document.getElementById('morph');
+const morphStage = document.getElementById('morph-stage');
+const morphLabel = document.getElementById('morph-label');
+
+const morphSentence = 'The individual was experiencing significant emotional distress however the surrounding observers fundamentally misinterpreted the available visual indicators of their condition';
+const morphWords = morphSentence.split(' ');
+const survivorIndices = new Set([7, 9, 12, 16]); // "however" → "but", mapped to result words
+const resultWords = ['Not', 'waving', 'but', 'drowning.'];
+
+// Create word elements
+const morphSpans = [];
+morphWords.forEach((w, i) => {
+  const span = document.createElement('span');
+  span.className = 'morph-word';
+  span.textContent = w;
+  span.style.fontFamily = 'var(--sans)';
+  span.style.fontWeight = '300';
+  span.style.fontSize = '1.1rem';
+  span.style.color = 'var(--dim)';
+  morphStage.appendChild(span);
+  morphSpans.push(span);
+});
+
+// Calculate start positions (paragraph layout)
+function layoutMorph() {
+  const stageRect = morphStage.getBoundingClientRect();
+  const stageW = stageRect.width;
+  const stageH = stageRect.height;
+  const centerX = stageW / 2;
+  const centerY = stageH / 2;
+
+  // Reset to flow layout to measure
+  morphSpans.forEach(s => {
+    s.style.position = 'relative';
+    s.style.display = 'inline-block';
+    s.style.margin = '0 0.3em 0.5em 0';
+    s.style.transform = 'none';
+    s.style.left = 'auto';
+    s.style.top = 'auto';
+    s.style.fontSize = window.innerWidth < 700 ? '0.95rem' : '1.1rem';
+    s.style.opacity = '1';
+  });
+
+  // Force layout, then capture positions
+  const startPositions = morphSpans.map(s => {
+    const r = s.getBoundingClientRect();
+    return {
+      x: r.left - stageRect.left,
+      y: r.top - stageRect.top,
+      w: r.width
+    };
+  });
+
+  // Calculate end positions for survivors (centered, large, spaced)
+  const resultFontSize = window.innerWidth < 700 ? 2.4 : 4;
+  const resultSpacing = window.innerWidth < 700 ? 10 : 16;
+
+  // Measure result text widths roughly
+  const tempSpan = document.createElement('span');
+  tempSpan.style.fontFamily = 'var(--serif)';
+  tempSpan.style.fontWeight = '300';
+  tempSpan.style.fontStyle = 'italic';
+  tempSpan.style.fontSize = resultFontSize + 'rem';
+  tempSpan.style.position = 'absolute';
+  tempSpan.style.visibility = 'hidden';
+  document.body.appendChild(tempSpan);
+
+  const resultWidths = resultWords.map(w => {
+    tempSpan.textContent = w;
+    return tempSpan.getBoundingClientRect().width;
+  });
+  const totalResultW = resultWidths.reduce((a, b) => a + b, 0) + resultSpacing * (resultWords.length - 1);
+  document.body.removeChild(tempSpan);
+
+  let endX = centerX - totalResultW / 2;
+  const endPositions = resultWords.map((w, i) => {
+    const pos = { x: endX, y: centerY - resultFontSize * 8 };
+    endX += resultWidths[i] + resultSpacing;
+    return pos;
+  });
+
+  // Now set all to absolute
+  morphSpans.forEach(s => {
+    s.style.position = 'absolute';
+    s.style.display = 'block';
+    s.style.margin = '0';
+  });
+
+  return { startPositions, endPositions, resultFontSize, stageRect };
+}
+
+let morphLayout = null;
+
+// Scroll handler
+function updateMorph() {
+  const rect = morphEl.getBoundingClientRect();
+  const viewH = window.innerHeight;
+  const morphH = morphEl.offsetHeight;
+
+  if (rect.top < viewH && rect.bottom > 0) {
+    if (!morphLayout) morphLayout = layoutMorph();
+    const { startPositions, endPositions, resultFontSize } = morphLayout;
+
+    const scrollInto = Math.max(0, viewH - rect.top);
+    const progress = Math.min(scrollInto / (morphH - viewH), 1);
+
+    // Phase 1 (0-0.15): just show the text, static
+    // Phase 2 (0.15-0.7): words transform
+    // Phase 3 (0.7-1.0): hold the result
+
+    let t = 0;
+    if (progress < 0.15) {
+      t = 0;
+    } else if (progress < 0.7) {
+      t = (progress - 0.15) / 0.55;
+    } else {
+      t = 1;
+    }
+
+    // Ease
+    const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+    // Map survivors to result positions
+    const survivorMap = [
+      { from: -1, to: 0, word: 'Not' },      // "Not" appears from nothing
+      { from: -1, to: 1, word: 'waving' },    // "waving" appears
+      { from: 7, to: 2, word: 'but' },        // "however" → "but"
+      { from: 16, to: 3, word: 'drowning.' }  // "condition" → "drowning."
+    ];
+
+    const baseFontSize = window.innerWidth < 700 ? 0.95 : 1.1;
+
+    morphSpans.forEach((span, i) => {
+      const isSurvivorSource = survivorMap.find(m => m.from === i);
+      const sp = startPositions[i];
+
+      if (isSurvivorSource) {
+        const ep = endPositions[isSurvivorSource.to];
+        const x = sp.x + (ep.x - sp.x) * ease;
+        const y = sp.y + (ep.y - sp.y) * ease;
+        const fontSize = baseFontSize + (resultFontSize - baseFontSize) * ease;
+
+        span.style.left = x + 'px';
+        span.style.top = y + 'px';
+        span.style.fontSize = fontSize + 'rem';
+        span.style.opacity = '1';
+        span.textContent = ease > 0.5 ? isSurvivorSource.word : morphWords[i];
+        span.style.fontFamily = ease > 0.3 ? 'var(--serif)' : 'var(--sans)';
+        span.style.fontStyle = ease > 0.3 ? 'italic' : 'normal';
+        span.style.fontWeight = '300';
+        span.style.color = ease > 0.2 ? 'var(--gold)' : 'var(--dim)';
+      } else {
+        span.style.left = sp.x + 'px';
+        span.style.top = sp.y + 'px';
+        span.style.fontSize = baseFontSize * (1 - ease * 0.6) + 'rem';
+        span.style.opacity = Math.max(0, 1 - ease * 2.5);
+        span.style.color = 'var(--dim)';
+        span.style.fontFamily = 'var(--sans)';
+        span.style.fontStyle = 'normal';
+
+        // Scatter slightly as they fade
+        if (ease > 0.3) {
+          const scatter = (ease - 0.3) * 40;
+          const angle = (i * 137.5) % 360; // golden angle for even distribution
+          const dx = Math.cos(angle * Math.PI / 180) * scatter;
+          const dy = Math.sin(angle * Math.PI / 180) * scatter;
+          span.style.left = (sp.x + dx) + 'px';
+          span.style.top = (sp.y + dy) + 'px';
+        }
+      }
+    });
+
+    // Add the "Not" and "waving" phantom survivors (they have no source word)
+    // Handle via two extra elements
+    let phantoms = morphStage.querySelectorAll('.morph-phantom');
+    if (phantoms.length === 0) {
+      ['Not', 'waving'].forEach((w, idx) => {
+        const ph = document.createElement('span');
+        ph.className = 'morph-word morph-phantom';
+        ph.textContent = w;
+        morphStage.appendChild(ph);
+      });
+      phantoms = morphStage.querySelectorAll('.morph-phantom');
+    }
+    phantoms.forEach((ph, idx) => {
+      const ep = endPositions[idx]; // 0=Not, 1=waving
+      ph.style.position = 'absolute';
+      ph.style.left = ep.x + 'px';
+      ph.style.top = ep.y + 'px';
+      ph.style.fontSize = resultFontSize + 'rem';
+      ph.style.fontFamily = 'var(--serif)';
+      ph.style.fontStyle = 'italic';
+      ph.style.fontWeight = '300';
+      ph.style.color = 'var(--gold)';
+      ph.style.opacity = Math.min(1, ease * 2);
+    });
+
+    // Label
+    if (progress > 0.75) {
+      morphLabel.textContent = '22 words → 4 · Stevie Smith, 1957';
+      morphLabel.classList.add('show');
+    } else {
+      morphLabel.classList.remove('show');
+    }
+  }
+}
+
+window.addEventListener('scroll', updateMorph, { passive: true });
+window.addEventListener('resize', () => { morphLayout = null; });
+
+// ═══ CATHEDRAL SCROLL ═══
+const cathText = document.getElementById('cath-text');
+const cathAttr = document.getElementById('cath-attr');
+const cathedral = document.getElementById('cathedral');
+
+window.addEventListener('scroll', () => {
+  const rect = cathedral.getBoundingClientRect();
+  const viewH = window.innerHeight;
+  const cathH = cathedral.offsetHeight;
+
+  if (rect.top < viewH && rect.bottom > 0) {
+    const scrollInto = Math.max(0, viewH - rect.top);
+    const progress = Math.min(scrollInto / cathH, 1);
+
+    // Scale: start at 1, grow to 2.5 at 0.3, shrink to 0.4 by 0.9
+    let scale;
+    if (progress < 0.3) {
+      scale = 1 + (progress / 0.3) * 1.5; // 1 -> 2.5
+    } else {
+      scale = 2.5 - ((progress - 0.3) / 0.6) * 2.1; // 2.5 -> 0.4
+    }
+    scale = Math.max(0.4, Math.min(2.5, scale));
+    cathText.style.transform = 'scale(' + scale + ')';
+
+    // Opacity: full until 0.7, then fade
+    const opacity = progress < 0.7 ? 1 : 1 - ((progress - 0.7) / 0.3);
+    cathText.style.opacity = Math.max(0, opacity);
+
+    // Show attribution at peak
+    if (progress > 0.25 && progress < 0.8) {
+      cathAttr.classList.add('show');
+    } else {
+      cathAttr.classList.remove('show');
+    }
+  }
+}, { passive: true });
+
+// ═══ STAGGER ═══
+const sObs = new IntersectionObserver(es => {
+  es.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.story-card,.rn,.vc,.eg,.ps').forEach((c, i) => {
+        c.style.opacity = '0';
+        c.style.transform = 'translateY(14px)';
+        c.style.transition = 'opacity .5s ' + (i * .06) + 's, transform .5s ' + (i * .06) + 's';
+        requestAnimationFrame(() => { c.style.opacity = '1'; c.style.transform = 'translateY(0)'; });
+      });
+    }
+  });
+}, { threshold: .05 });
+document.querySelectorAll('.story-grid,.river,.venue-strip,.eg-grid').forEach(el => sObs.observe(el));
+document.querySelectorAll('.ps').forEach(el => { if(el.parentElement) sObs.observe(el.parentElement); });
+
+// ═══ ATTENTION VISUALIZER ═══
+const attData = [
+  {
+    words: ['Not','waving','but','drowning'],
+    // Attention matrix (symmetric, 0-1, stronger = more attention)
+    matrix: [
+      [0,.3,.6,.9],
+      [.3,0,.8,.95],
+      [.6,.8,0,.85],
+      [.9,.95,.85,0]
+    ],
+    insight: 'Dense bonds everywhere. "waving" and "drowning" are almost fused, the model can\'t process one without attending to the other. The tension IS the meaning. Compression ratio: maximum. Every word is load-bearing.',
+    color: '#d4a853'
+  },
+  {
+    words: ['The','individual','was','experiencing','distress','but','observers','misinterpreted','the','signals'],
+    matrix: (()=>{
+      const n=10, m=[];
+      for(let i=0;i<n;i++){m[i]=[];for(let j=0;j<n;j++) m[i][j]=i===j?0:Math.max(0,.08+Math.random()*.15)}
+      m[3][4]=.4;m[4][3]=.4;m[6][7]=.35;m[7][6]=.35;
+      return m;
+    })(),
+    insight: 'Attention is scattered. Most connections are faint, the model sees grammar but no tension. "Distress" and "misinterpreted" have a weak link but nothing grips. The meaning arrives; the force doesn\'t.',
+    color: '#8a857d'
+  },
+  {
+    words: ['A','flower','bloomed','in','a','dark','room'],
+    matrix: [
+      [0,.2,.3,.15,.1,.5,.4],
+      [.2,0,.85,.2,.1,.9,.7],
+      [.3,.85,0,.3,.1,.7,.6],
+      [.15,.2,.3,0,.2,.3,.4],
+      [.1,.1,.1,.2,0,.2,.2],
+      [.5,.9,.7,.3,.2,0,.85],
+      [.4,.7,.6,.4,.2,.85,0]
+    ],
+    insight: '"Flower" locks onto "dark" with near-maximum attention, the model sees the paradox. "Bloomed" connects strongly to "room" (growth inside enclosure). The tension triangle: flower-dark-room. Kendrick\'s image creates the same attention density as Shakespeare\'s oxymorons.',
+    color: '#6a5acd'
+  },
+  {
+    words: ['Just','do','it'],
+    matrix: [
+      [0,.7,.6],
+      [.7,0,.9],
+      [.6,.9,0]
+    ],
+    insight: 'Three words, all maximally bonded. There\'s nowhere for attention to scatter. Every word needs the other two. This is why three-word lines survive: the attention graph is a complete triangle. No slack, no waste.',
+    color: '#c0392b'
+  },
+  {
+    words: ['Implement','the','optimization','strategy','for','operational','excellence'],
+    matrix: (()=>{
+      const n=7,m=[];
+      for(let i=0;i<n;i++){m[i]=[];for(let j=0;j<n;j++) m[i][j]=i===j?0:Math.max(0,.05+Math.random()*.18)}
+      m[0][2]=.35;m[2][0]=.35;m[2][3]=.3;m[3][2]=.3;m[5][6]=.3;m[6][5]=.3;
+      return m;
+    })(),
+    insight: 'Zombie nouns create zombie attention. "Implementation," "optimization," "excellence", each is an abstraction the model can parse but can\'t grip. No word creates strong bonds with its neighbors. The sentence has structure but no skeleton.',
+    color: '#8a857d'
+  }
+];
+
+const canvas = document.getElementById('att-canvas');
+const ctx = canvas.getContext('2d');
+const insightEl = document.getElementById('att-insight');
+let currentAtt = 0;
+let animProgress = 0;
+let animFrame = null;
+
+function drawAttention(idx, progress) {
+  const d = attData[idx];
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.parentElement.getBoundingClientRect();
+  const W = rect.width - 48; // padding
+  const canvasH = window.innerWidth < 700 ? 240 : 320;
+  canvas.width = W * dpr;
+  canvas.height = canvasH * dpr;
+  canvas.style.width = W + 'px';
+  canvas.style.height = canvasH + 'px';
+  ctx.scale(dpr, dpr);
+
+  ctx.clearRect(0, 0, W, canvasH);
+  const n = d.words.length;
+  const wordY = canvasH - 60;
+  const arcY = 120;
+  const pad = 40;
+  const space = (W - pad * 2) / (n - 1 || 1);
+
+  // Draw connections first (behind words)
+  for (let i = 0; i < n; i++) {
+    for (let j = i + 1; j < n; j++) {
+      const strength = d.matrix[i][j] * progress;
+      if (strength < 0.05) continue;
+      const x1 = pad + i * space;
+      const x2 = pad + j * space;
+      const dist = Math.abs(j - i);
+      const cpY = wordY - 30 - dist * (canvasH / 12) * Math.min(1, (W / 600));
+
+      ctx.beginPath();
+      ctx.moveTo(x1, wordY - 12);
+      const cpX = (x1 + x2) / 2;
+      ctx.quadraticCurveTo(cpX, cpY, x2, wordY - 12);
+      ctx.strokeStyle = d.color;
+      ctx.globalAlpha = strength * 0.7;
+      ctx.lineWidth = strength * 4;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  // Draw words
+  for (let i = 0; i < n; i++) {
+    const x = pad + i * space;
+    ctx.font = '600 ' + Math.min(16, Math.max(11, W / n / 1.8)) + 'px "DM Sans", sans-serif';
+    ctx.fillStyle = '#e8e4de';
+    ctx.textAlign = 'center';
+    ctx.fillText(d.words[i], x, wordY);
+
+    // Small dot above word
+    ctx.beginPath();
+    ctx.arc(x, wordY - 18, 3, 0, Math.PI * 2);
+    ctx.fillStyle = d.color;
+    ctx.globalAlpha = 0.5 + 0.5 * progress;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+}
+
+function animateAttention(idx) {
+  if (animFrame) cancelAnimationFrame(animFrame);
+  animProgress = 0;
+  insightEl.style.opacity = '0';
+
+  function step() {
+    animProgress += 0.02;
+    if (animProgress > 1) animProgress = 1;
+    drawAttention(idx, easeOutCubic(animProgress));
+    if (animProgress < 1) {
+      animFrame = requestAnimationFrame(step);
+    } else {
+      insightEl.textContent = attData[idx].insight;
+      insightEl.style.opacity = '1';
+    }
+  }
+  animFrame = requestAnimationFrame(step);
+}
+
+function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+// Buttons
+document.querySelectorAll('.att-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.att-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentAtt = parseInt(btn.dataset.att);
+    animateAttention(currentAtt);
+  });
+});
+
+// Initial draw when visible
+const attObs = new IntersectionObserver(es => {
+  es.forEach(e => {
+    if (e.isIntersecting) {
+      animateAttention(0);
+      attObs.disconnect();
+    }
+  });
+}, { threshold: .3 });
+attObs.observe(canvas);
+
+// Resize handler
+window.addEventListener('resize', () => { drawAttention(currentAtt, 1); });
+</script>
+</body>
+</html>
